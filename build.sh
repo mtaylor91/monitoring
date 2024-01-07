@@ -19,5 +19,10 @@ jsonnet -J vendor -m manifests "${1-monitoring.jsonnet}" | xargs -I{} sh -c 'cat
 
 # Make sure to remove json files
 find manifests -type f ! -name '*.yaml' -delete
-rm -f kustomization
+rm -f kustomization.yml
 
+# Generate kustomization.yml
+cat <<EOF > kustomization.yml
+resources:
+$(find manifests -name '*.yaml' -printf '- %p\n')
+EOF
