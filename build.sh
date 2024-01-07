@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script uses arg $1 (name of *.jsonnet file to use) to generate the manifests/*.yaml files.
+# This script uses arg $1 (name of *.jsonnet file to use) to generate the deploy/*.yaml files.
 
 set -e
 set -x
@@ -10,19 +10,21 @@ set -o pipefail
 # Make sure to use project tooling
 PATH="$(pwd)/tmp/bin:${PATH}"
 
-# Make sure to start with a clean 'manifests' dir
-rm -rf manifests
-mkdir -p manifests/setup
+# Make sure to start with a clean 'deploy' dir
+rm -rf deploy
+mkdir -p deploy/setup
 
 # Calling gojsontoyaml is optional, but we would like to generate yaml, not json
-jsonnet -J vendor -m manifests "${1-monitoring.jsonnet}" | xargs -I{} sh -c 'cat {} | gojsontoyaml > {}.yaml' -- {}
+jsonnet -J vendor -m deploy "${1-monitoring.jsonnet}" | xargs -I{} sh -c 'cat {} | gojsontoyaml > {}.yaml' -- {}
 
 # Make sure to remove json files
-find manifests -type f ! -name '*.yaml' -delete
-rm -f kustomization.yml
+find deploy -type f ! -name '*.yaml' -delete
+rm -f deploy/kustomization.yml
 
 # Generate kustomization.yml
+pushd deploy
 cat <<EOF > kustomization.yml
 resources:
-$(find manifests -name '*.yaml' -printf '- %p\n')
+$(find ./ -name '*.yaml' -printf '- %p\n')
 EOF
+popd
