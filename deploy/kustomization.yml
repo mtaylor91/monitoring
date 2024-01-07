@@ -1,4 +1,5 @@
 resources:
+- ./setup
 - ./alertmanager-alertmanager.yaml
 - ./alertmanager-networkPolicy.yaml
 - ./alertmanager-podDisruptionBudget.yaml

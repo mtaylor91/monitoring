@@ -24,6 +24,7 @@ find deploy -type f ! -name '*.yaml' -delete
 pushd deploy
 cat <<EOF > kustomization.yml
 resources:
+- ./setup
 $(for f in ./*.yaml ; do echo - $f ; done)
 EOF
 
