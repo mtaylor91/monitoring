@@ -10,6 +10,40 @@ local kp =
   // (import 'kube-prometheus/addons/external-metrics.libsonnet') +
   // (import 'kube-prometheus/addons/pyrra.libsonnet') +
   {
+    grafana+: {
+      networkPolicy+: {
+        spec+: {
+          ingress+: [{
+            from: [{
+              namespaceSelector: {
+                matchLabels: {
+                  'kubernetes.io/metadata.name': 'istio-gateways',
+                },
+              },
+
+            }],
+            ports: [{ port: 3000, protocol: 'TCP' }],
+          }],
+        },
+      },
+    },
+    prometheus+: {
+      networkPolicy+: {
+        spec+: {
+          ingress+: [{
+            from: [{
+              namespaceSelector: {
+                matchLabels: {
+                  'kubernetes.io/metadata.name': 'istio-gateways',
+                },
+              },
+
+            }],
+            ports: [{ port: 9090, protocol: 'TCP' }],
+          }],
+        },
+      },
+    },
     values+:: {
       common+: {
         namespace: 'monitoring',
