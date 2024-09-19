@@ -19,12 +19,10 @@ grafonnet.dashboard
 * [`fn withLinks(value)`](#fn-withlinks)
 * [`fn withLinksMixin(value)`](#fn-withlinksmixin)
 * [`fn withLiveNow(value=true)`](#fn-withlivenow)
-* [`fn withPanels(value)`](#fn-withpanels)
-* [`fn withPanelsMixin(value)`](#fn-withpanelsmixin)
+* [`fn withPanels(panels, setPanelIDs=true)`](#fn-withpanels)
+* [`fn withPanelsMixin(panels, setPanelIDs=true)`](#fn-withpanelsmixin)
 * [`fn withRefresh(value)`](#fn-withrefresh)
-* [`fn withRefreshMixin(value)`](#fn-withrefreshmixin)
 * [`fn withSchemaVersion(value=36)`](#fn-withschemaversion)
-* [`fn withStyle(value="dark")`](#fn-withstyle)
 * [`fn withTags(value)`](#fn-withtags)
 * [`fn withTagsMixin(value)`](#fn-withtagsmixin)
 * [`fn withTemplating(value)`](#fn-withtemplating)
@@ -199,40 +197,33 @@ avoid dashboards presenting stale live data
 ### fn withPanels
 
 ```jsonnet
-withPanels(value)
+withPanels(panels, setPanelIDs=true)
 ```
 
 PARAMETERS:
 
-* **value** (`array`)
+* **panels** (`array`)
+* **setPanelIDs** (`bool`)
+   - default value: `true`
 
-
+`withPanels` sets the panels on a dashboard authoratively. It automatically adds IDs to the panels, this can be disabled with `setPanelIDs=false`.
 ### fn withPanelsMixin
 
 ```jsonnet
-withPanelsMixin(value)
+withPanelsMixin(panels, setPanelIDs=true)
 ```
 
 PARAMETERS:
 
-* **value** (`array`)
+* **panels** (`array`)
+* **setPanelIDs** (`bool`)
+   - default value: `true`
 
-
+`withPanelsMixin` adds more panels to a dashboard.
 ### fn withRefresh
 
 ```jsonnet
 withRefresh(value)
-```
-
-PARAMETERS:
-
-* **value** (`string`)
-
-Refresh rate of dashboard. Represented via interval string, e.g. "5s", "1m", "1h", "1d".
-### fn withRefreshMixin
-
-```jsonnet
-withRefreshMixin(value)
 ```
 
 PARAMETERS:
@@ -254,19 +245,6 @@ PARAMETERS:
 Version of the JSON schema, incremented each time a Grafana update brings
 changes to said schema.
 TODO this is the existing schema numbering system. It will be replaced by Thema's themaVersion
-### fn withStyle
-
-```jsonnet
-withStyle(value="dark")
-```
-
-PARAMETERS:
-
-* **value** (`string`)
-   - default value: `"dark"`
-   - valid values: `"dark"`, `"light"`
-
-Theme of dashboard.
 ### fn withTags
 
 ```jsonnet
